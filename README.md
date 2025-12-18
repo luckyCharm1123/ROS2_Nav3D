@@ -94,23 +94,55 @@ source /opt/ros/humble/setup.bash
 ### 步骤1: 获取源码
 
 ```bash
-# 1.1 创建工作空间
-mkdir -p ~/nav3d_ws/src
-cd ~/nav3d_ws/src
+# 1.1 克隆仓库
+git clone https://github.com/luckyCharm1123/ROS2_Nav3D.git
+cd ROS2_Nav3D
 
-# 1.2 克隆仓库
-git clone https://github.com/luckyCharm1123/ROS2_Nav3D.git nav3d
-cd nav3d
-
-# 1.3 检查目录结构
+# 1.2 检查目录结构
 ls -la
 # 应该看到: src/ README.md .gitignore
 ```
 
-### 步骤2: 安装依赖
+### 步骤2: 构建项目
 
 ```bash
-# 2.1 安装ROS2依赖包
+# 2.1 构建所有包
+colcon build --symlink-install
+
+# 2.2 构建完成后验证
+ls install/
+# 应该看到: lib/ share/ etc/ ...
+```
+
+### 步骤3: 环境配置
+
+```bash
+# 3.1 添加环境变量到bashrc
+echo "source ~/ROS2_Nav3D/install/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+
+# 3.2 验证包是否正确安装
+ros2 pkg list | grep grid_path_searcher
+ros2 pkg list | grep rviz_3d_nav_goal_tool
+ros2 pkg list | grep waypoint_generator
+```
+
+### 步骤4: 验证安装
+
+```bash
+# 4.1 检查可执行文件
+ls install/grid_path_searcher/lib/grid_path_searcher/
+# 应该看到: demo_node random_complex_generator
+
+# 4.2 检查RViz插件
+ls install/rviz_3d_nav_goal_tool/lib/rviz_3d_nav_goal_tool/
+# 应该看到: librviz_3d_nav_goal_tool.so
+```
+
+### 步骤5: 安装系统依赖 (如需要)
+
+```bash
+# 如果编译时缺少依赖，安装以下包
 sudo apt install -y \
     ros-humble-rviz2 \
     ros-humble-pcl-ros \
@@ -119,49 +151,6 @@ sudo apt install -y \
     libpcl-dev \
     qtbase5-dev \
     libqt5opengl5-dev
-
-# 2.2 安装依赖 (如果需要)
-cd ~/nav3d_ws
-rosdep install --from-paths src --ignore-src -r -y
-```
-
-### 步骤3: 构建项目
-
-```bash
-# 3.1 返回工作空间根目录
-cd ~/nav3d_ws
-
-# 3.2 构建所有包
-colcon build --symlink-install
-
-# 3.3 构建完成后验证
-ls install/
-# 应该看到: lib/ share/ etc/ ...
-```
-
-### 步骤4: 环境配置
-
-```bash
-# 4.1 添加环境变量到bashrc
-echo "source ~/nav3d_ws/install/setup.bash" >> ~/.bashrc
-source ~/.bashrc
-
-# 4.2 验证包是否正确安装
-ros2 pkg list | grep grid_path_searcher
-ros2 pkg list | grep rviz_3d_nav_goal_tool
-ros2 pkg list | grep waypoint_generator
-```
-
-### 步骤5: 验证安装
-
-```bash
-# 5.1 检查可执行文件
-ls install/grid_path_searcher/lib/grid_path_searcher/
-# 应该看到: demo_node random_complex_generator
-
-# 5.2 检查RViz插件
-ls install/rviz_3d_nav_goal_tool/lib/rviz_3d_nav_goal_tool/
-# 应该看到: librviz_3d_nav_goal_tool.so
 ```
 
 ---
