@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>rviz_3d_nav_goal_tool</name>
+  <version>0.0.0</version>
+  <description>
+    The rviz-3d-nav-goal-tool package is a RViz2 plugin tool for 3d navigation goal.
+  </description>
+
+  <maintainer email="jianle001@e.ntu.edu.sg">Bruce Chan Jian Le</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>rviz_common</depend>
+  <depend>rviz_rendering</depend>
+  <depend>rviz_default_plugins</depend>
+  <depend>geometry_msgs</depend>
+  <depend>tf2</depend>
+  <depend>tf2_geometry_msgs</depend>
+  <depend>pluginlib</depend>
+  <depend>rviz_ogre_vendor</depend>
+  
+  <depend>qt_gui_cpp</depend> 
+
+  <export>
+    <build_type>ament_cmake</build_type>
+    <rviz_common plugin="${prefix}/rviz_plugin.xml"/>
+  </export>
+</package>
