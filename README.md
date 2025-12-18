@@ -82,23 +82,35 @@ ros2 --version
 
 # 检查工作空间
 echo $ROS2_WORKSPACE
+
+# 确保ROS2环境已配置
+source /opt/ros/humble/setup.bash
 ```
 
 ---
 
 ## 📦 部署指南
 
-### 步骤1: 环境准备
+### 步骤1: 获取源码
 
 ```bash
-# 1.1 安装ROS2 Humble (如果未安装)
-sudo apt update && sudo apt install -y curl gnupg2 lsb-release
-sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
-sudo apt update
-sudo apt install -y ros-humble-desktop
+# 1.1 创建工作空间
+mkdir -p ~/nav3d_ws/src
+cd ~/nav3d_ws/src
 
-# 1.2 安装依赖包
+# 1.2 克隆仓库
+git clone https://github.com/luckyCharm1123/ROS2_Nav3D.git nav3d
+cd nav3d
+
+# 1.3 检查目录结构
+ls -la
+# 应该看到: src/ README.md .gitignore
+```
+
+### 步骤2: 安装依赖
+
+```bash
+# 2.1 安装ROS2依赖包
 sudo apt install -y \
     ros-humble-rviz2 \
     ros-humble-pcl-ros \
@@ -108,24 +120,9 @@ sudo apt install -y \
     qtbase5-dev \
     libqt5opengl5-dev
 
-# 1.3 配置ROS2环境
-source /opt/ros/humble/setup.bash
-```
-
-### 步骤2: 获取源码
-
-```bash
-# 2.1 创建工作空间
-mkdir -p ~/nav3d_ws/src
-cd ~/nav3d_ws/src
-
-# 2.2 克隆仓库
-git clone https://github.com/luckyCharm1123/ROS2_Nav3D.git nav3d
-cd nav3d
-
-# 2.3 检查目录结构
-ls -la
-# 应该看到: src/ README.md .gitignore
+# 2.2 安装依赖 (如果需要)
+cd ~/nav3d_ws
+rosdep install --from-paths src --ignore-src -r -y
 ```
 
 ### 步骤3: 构建项目
@@ -134,13 +131,10 @@ ls -la
 # 3.1 返回工作空间根目录
 cd ~/nav3d_ws
 
-# 3.2 安装依赖 (如果需要)
-rosdep install --from-paths src --ignore-src -r -y
-
-# 3.3 构建所有包
+# 3.2 构建所有包
 colcon build --symlink-install
 
-# 3.4 构建完成后验证
+# 3.3 构建完成后验证
 ls install/
 # 应该看到: lib/ share/ etc/ ...
 ```
