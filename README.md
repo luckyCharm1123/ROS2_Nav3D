@@ -516,8 +516,8 @@ limitations under the License.
 
 ## 📞 联系方式
 
-- **作者**: Bruce Chan Jian Le / ubuntu22
-- **邮箱**: jianle001@e.ntu.edu.sg / 599623904@qq.com
+- **作者**: LuckyCharm / ubuntu22
+- **邮箱**: 599623904@qq.com
 - **GitHub**: [@luckyCharm1123](https://github.com/luckyCharm1123)
 
 ---
